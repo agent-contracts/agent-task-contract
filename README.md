@@ -1,5 +1,7 @@
 # Agent Task Contract
 
+![Agent Task Contract social preview](assets/social-preview.png)
+
 English | [简体中文](README.zh-CN.md)
 
 `agent-task-contract` is a skill for coding agents that keeps repository work scoped, verifiable, and ready for review.

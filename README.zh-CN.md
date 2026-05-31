@@ -1,5 +1,7 @@
 # Agent Task Contract
 
+![Agent Task Contract social preview](assets/social-preview.png)
+
 [English](README.md) | 简体中文
 
 `agent-task-contract` 是一个面向代码智能体的 skill，用来让仓库修改更聚焦、更容易验证，也更适合进入代码审查。
