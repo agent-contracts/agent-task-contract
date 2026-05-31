@@ -2,17 +2,15 @@
 
 English | [简体中文](README.zh-CN.md)
 
-`agent-task-contract` is an open-source skill for coding agents. It makes agents define a small task contract before work and pass a verification gate before claiming completion.
+`agent-task-contract` is a skill for coding agents that keeps repository work scoped, verifiable, and ready for review.
 
-The goal is to reduce common agent failure modes:
+It gives an agent a lightweight workflow for:
 
-- premature "done" claims without evidence
-- context drift during multi-step work
-- scope creep and unrelated edits
-- repeated failed commands without diagnosis
-- weak PR handoffs with unclear tests and risks
-
-The name was chosen after checking for exact-name collisions around `agent-task-contract` and `Agent Task Contract` so the project has a specific, low-conflict identity.
+- defining the task before editing
+- keeping non-goals and scope boundaries visible
+- choosing verification that matches the risk of the change
+- recording useful failure context instead of blindly retrying commands
+- handing off changes with clear test evidence and PR notes
 
 ## Repository Layout
 
@@ -33,13 +31,13 @@ scripts/
 
 Copy or symlink the `agent-task-contract` folder into the skill directory used by your agent runtime.
 
-For Codex-style local skills, this is typically:
+For Codex-style local skills:
 
 ```powershell
 Copy-Item -Recurse .\agent-task-contract $env:USERPROFILE\.codex\skills\
 ```
 
-For other agent tools, keep the `SKILL.md` workflow and bundled references together, then adapt the folder location to that tool's skill/plugin mechanism.
+For Claude Code, OpenClaw, or other agent tools, keep `SKILL.md`, `references/`, and `scripts/` together and place the folder where that tool loads skills or plugins.
 
 ## Validate
 
@@ -47,7 +45,7 @@ For other agent tools, keep the `SKILL.md` workflow and bundled references toget
 npm run validate
 ```
 
-Optional repository inspection helper:
+Inspect a repository before using the skill:
 
 ```powershell
 npm run inspect
@@ -65,6 +63,10 @@ Use $agent-task-contract to prepare this repo change for a PR-ready handoff.
 
 ## Contributing
 
-Keep the skill itself concise. Put detailed checklists in `references/`, deterministic helper behavior in `scripts/`, and repo maintenance files at the repository root.
+Keep the skill folder focused on runtime instructions. Put detailed checklists in `references/`, deterministic helpers in `scripts/`, and repository maintenance files at the project root.
 
-Before opening a PR, run `npm run validate` and include the verification output in the PR body.
+Before opening a PR, run:
+
+```powershell
+npm run validate
+```
