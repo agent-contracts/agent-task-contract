@@ -1,5 +1,7 @@
 # Agent Task Contract
 
+English | [简体中文](README.zh-CN.md)
+
 `agent-task-contract` is an open-source skill for coding agents. It makes agents define a small task contract before work and pass a verification gate before claiming completion.
 
 The goal is to reduce common agent failure modes:
