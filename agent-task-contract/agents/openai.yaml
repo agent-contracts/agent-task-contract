@@ -1,0 +1,7 @@
+interface:
+  display_name: "Agent Task Contract"
+  short_description: "Adds task contracts, verification gates, and PR-ready handoffs to coding-agent work."
+  default_prompt: "Use $agent-task-contract to plan, implement, verify, and summarize this coding task with clear completion evidence."
+
+policy:
+  allow_implicit_invocation: true
