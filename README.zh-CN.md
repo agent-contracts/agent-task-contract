@@ -41,6 +41,13 @@ Copy-Item -Recurse .\agent-task-contract $env:USERPROFILE\.codex\skills\
 
 如果使用 Claude Code、OpenClaw 或其他智能体工具，请保持 `SKILL.md`、`references/` 和 `scripts/` 在同一个文件夹中，并放到对应工具加载 skill 或 plugin 的位置。
 
+## 示例
+
+- [带验证证据的 Bug 修复](examples/bug-fix.zh-CN.md)
+- [控制改动范围的功能开发](examples/feature-change.zh-CN.md)
+- [适合提交 PR 的交付说明](examples/pr-handoff.zh-CN.md)
+- [查看全部示例](examples/README.zh-CN.md)
+
 ## 校验
 
 ```powershell

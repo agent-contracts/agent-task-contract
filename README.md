@@ -41,6 +41,13 @@ Copy-Item -Recurse .\agent-task-contract $env:USERPROFILE\.codex\skills\
 
 For Claude Code, OpenClaw, or other agent tools, keep `SKILL.md`, `references/`, and `scripts/` together and place the folder where that tool loads skills or plugins.
 
+## Examples
+
+- [Bug fix with verification evidence](examples/bug-fix.md)
+- [Scoped feature change](examples/feature-change.md)
+- [PR-ready handoff](examples/pr-handoff.md)
+- [Browse all examples](examples/README.md)
+
 ## Validate
 
 ```powershell
