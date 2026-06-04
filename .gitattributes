@@ -1,0 +1,4 @@
+# Keep GitHub language statistics focused on source files.
+*.ts linguist-language=TypeScript
+package-lock.json linguist-generated=true
+dist/** linguist-generated=true
