@@ -2,34 +2,37 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
-const skillDir = resolve(process.argv[2] || "agent-task-contract");
-const errors = [];
-const warnings = [];
+type Frontmatter = Record<string, string>;
 
-function fail(message) {
+const skillDir = resolve(process.argv[2] ?? "agent-task-contract");
+const errors: string[] = [];
+const warnings: string[] = [];
+
+function fail(message: string): void {
   errors.push(message);
 }
 
-function warn(message) {
+function warn(message: string): void {
   warnings.push(message);
 }
 
-function read(path) {
+function read(path: string): string {
   return readFileSync(path, "utf8");
 }
 
-function fileExists(path) {
+function fileExists(path: string): boolean {
   return existsSync(path) && statSync(path).isFile();
 }
 
-function dirExists(path) {
+function dirExists(path: string): boolean {
   return existsSync(path) && statSync(path).isDirectory();
 }
 
-function parseFrontmatter(markdown) {
+function parseFrontmatter(markdown: string): Frontmatter | null {
   const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
   if (!match) return null;
-  const data = {};
+
+  const data: Frontmatter = {};
   for (const line of match[1].split(/\r?\n/)) {
     const field = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
     if (!field) continue;
@@ -54,17 +57,20 @@ if (!dirExists(skillDir)) {
     if (!frontmatter) {
       fail("SKILL.md must start with YAML frontmatter");
     } else {
-      if (frontmatter.name !== expectedName) {
-        fail(`Frontmatter name must equal folder name: expected ${expectedName}, got ${frontmatter.name}`);
+      const skillName = frontmatter.name ?? "";
+      const description = frontmatter.description ?? "";
+
+      if (skillName !== expectedName) {
+        fail(`Frontmatter name must equal folder name: expected ${expectedName}, got ${skillName}`);
       }
 
-      if (!/^[a-z0-9-]{1,64}$/.test(frontmatter.name || "")) {
+      if (!/^[a-z0-9-]{1,64}$/.test(skillName)) {
         fail("Skill name must use lowercase letters, digits, and hyphens only, max 64 chars");
       }
 
-      if (!frontmatter.description || frontmatter.description.includes("TODO")) {
+      if (!description || description.includes("TODO")) {
         fail("Frontmatter description is missing or still contains TODO");
-      } else if (frontmatter.description.length < 120) {
+      } else if (description.length < 120) {
         warn("Frontmatter description is short; include concrete trigger contexts");
       }
     }

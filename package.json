@@ -5,11 +5,17 @@
   "description": "Open-source skill that adds task contracts and verification gates to coding-agent work.",
   "type": "module",
   "scripts": {
-    "validate": "node scripts/validate-skill.mjs agent-task-contract",
-    "inspect": "node agent-task-contract/scripts/inspect-repo.mjs ."
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "validate": "npm run build && node dist/scripts/validate-skill.js agent-task-contract",
+    "inspect": "npm run build && node dist/agent-task-contract/scripts/inspect-repo.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "typescript": "^5.7.2"
   },
   "license": "MIT"
 }

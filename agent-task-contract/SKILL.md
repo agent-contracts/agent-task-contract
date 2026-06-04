@@ -39,10 +39,10 @@ Start from local evidence:
 - Read project instruction files such as `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and repo README files when relevant.
 - Check git status before editing, and avoid reverting changes you did not make.
 - Identify existing test, lint, typecheck, build, and formatter commands before inventing new ones.
-- Use `scripts/inspect-repo.mjs` when repository context is unclear:
+- Use the TypeScript-backed repository inspection helper when repository context is unclear:
 
 ```bash
-node path/to/agent-task-contract/scripts/inspect-repo.mjs /path/to/repo
+npm run inspect -- /path/to/repo
 ```
 
 ## Verification Gate
