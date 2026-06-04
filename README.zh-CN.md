@@ -21,9 +21,9 @@ agent-task-contract/
   SKILL.md
   agents/openai.yaml
   references/
-  scripts/inspect-repo.mjs
+  scripts/inspect-repo.ts
 scripts/
-  validate-skill.mjs
+  validate-skill.ts
 .github/
   workflows/validate.yml
   PULL_REQUEST_TEMPLATE.md
@@ -50,6 +50,12 @@ Copy-Item -Recurse .\agent-task-contract $env:USERPROFILE\.codex\skills\
 
 ## 校验
 
+先安装 TypeScript 工具链：
+
+```powershell
+npm install
+```
+
 ```powershell
 npm run validate
 ```
@@ -59,6 +65,8 @@ npm run validate
 ```powershell
 npm run inspect
 ```
+
+辅助脚本使用 TypeScript 编写，并通过 `npm run build` 编译到 `dist/`。
 
 ## 示例提示词
 

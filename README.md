@@ -21,9 +21,9 @@ agent-task-contract/
   SKILL.md
   agents/openai.yaml
   references/
-  scripts/inspect-repo.mjs
+  scripts/inspect-repo.ts
 scripts/
-  validate-skill.mjs
+  validate-skill.ts
 .github/
   workflows/validate.yml
   PULL_REQUEST_TEMPLATE.md
@@ -50,6 +50,12 @@ For Claude Code, OpenClaw, or other agent tools, keep `SKILL.md`, `references/`,
 
 ## Validate
 
+Install the TypeScript toolchain first:
+
+```powershell
+npm install
+```
+
 ```powershell
 npm run validate
 ```
@@ -59,6 +65,8 @@ Inspect a repository before using the skill:
 ```powershell
 npm run inspect
 ```
+
+The helper scripts are written in TypeScript and compiled into `dist/` by `npm run build`.
 
 ## Example Prompts
 

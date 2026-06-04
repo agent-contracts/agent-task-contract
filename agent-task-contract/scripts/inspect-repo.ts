@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 
-const startDir = resolve(process.argv[2] || process.cwd());
+type PackageJson = {
+  scripts?: Record<string, string>;
+};
 
-function run(command, args, cwd) {
+const startDir = resolve(process.argv[2] ?? process.cwd());
+
+function run(command: string, args: string[], cwd: string): string {
   try {
     return execFileSync(command, args, {
       cwd,
@@ -17,24 +21,16 @@ function run(command, args, cwd) {
   }
 }
 
-function fileExists(path) {
+function fileExists(path: string): boolean {
   return existsSync(path) && statSync(path).isFile();
 }
 
-function dirExists(path) {
-  return existsSync(path) && statSync(path).isDirectory();
-}
-
-function readJson(path) {
+function readJson<T>(path: string): T | null {
   try {
-    return JSON.parse(readFileSync(path, "utf8"));
+    return JSON.parse(readFileSync(path, "utf8")) as T;
   } catch {
     return null;
   }
-}
-
-function asRel(root, path) {
-  return relative(root, path).replaceAll("\\", "/") || ".";
 }
 
 const gitRootOutput = run("git", ["rev-parse", "--show-toplevel"], startDir);
@@ -51,9 +47,9 @@ const instructionCandidates = [
   ".cursorrules"
 ].filter((name) => existsSync(join(repoRoot, name)));
 
-const commands = [];
+const commands: string[] = [];
 const packageJsonPath = join(repoRoot, "package.json");
-const packageJson = fileExists(packageJsonPath) ? readJson(packageJsonPath) : null;
+const packageJson = fileExists(packageJsonPath) ? readJson<PackageJson>(packageJsonPath) : null;
 
 if (packageJson?.scripts) {
   const manager = fileExists(join(repoRoot, "pnpm-lock.yaml"))
@@ -61,6 +57,7 @@ if (packageJson?.scripts) {
     : fileExists(join(repoRoot, "yarn.lock"))
       ? "yarn"
       : "npm";
+
   for (const scriptName of ["validate", "lint", "typecheck", "test", "build", "format"]) {
     if (packageJson.scripts[scriptName]) {
       commands.push(`${manager} run ${scriptName}`);
